@@ -60,16 +60,9 @@ void Roster::add(string studentID, string firstName, string lastName, string ema
 void Roster::printAll() {
 	Student::printHeader();
 	for (int i = 0; i <= Roster::lastIndex; i++) {
-		cout << classRosterArray[i]->getStudentID(); cout << '\t';
-		cout << classRosterArray[i]->getFirstName(); cout << '\t';
-		cout << classRosterArray[i]->getLastName(); cout << '\t';
-		cout << classRosterArray[i]->getEmailAddress(); cout << '\t';
-		cout << classRosterArray[i]->getAge(); cout << '\t';
-		cout << classRosterArray[i]->getDaysInCourse()[0]; cout << '\t';
-		cout << classRosterArray[i]->getDaysInCourse()[1]; cout << '\t';
-		cout << classRosterArray[i]->getDaysInCourse()[2]; cout << '\t';
-		cout << degreeProgramStrings[classRosterArray[i]->getDegreeProgram()] << std::endl;
+		classRosterArray[i]->print(); // Call the print() method for each student
 	}
+	cout << std::endl;
 }
 
 /*display only students who match the given degree program*/
@@ -94,12 +87,16 @@ void Roster::printInvalidEmails() {
 	if (!any) cout << "NONE" << std::endl;
 }
 
-void Roster::printAverageDaysInCourse() {
+void Roster::printAverageDaysInCourse(string studentID) {
+	bool success = false; /*assuming it isn't here*/
 	for (int i = 0; i <= Roster::lastIndex; i++) {
-		cout << classRosterArray[i]->getStudentID() << ": ";
-		cout << (classRosterArray[i]->getDaysInCourse()[0]
-			+ classRosterArray[i]->getDaysInCourse()[1]
-			+ classRosterArray[i]->getDaysInCourse()[2]) / 3.0 << std::endl;
+		if (classRosterArray[i]->getStudentID() == studentID) {
+			success = true; /*found*/
+			cout << classRosterArray[i]->getStudentID() << ": ";
+			cout << (classRosterArray[i]->getDaysInCourse()[0]
+				+ classRosterArray[i]->getDaysInCourse()[1]
+				+ classRosterArray[i]->getDaysInCourse()[2]) / 3.0 << std::endl;
+		}
 	}
 	cout << std::endl;
 }
@@ -119,7 +116,6 @@ void Roster::remove(string studentID) /*studentID is a parameter*/ {
 	}
 	if (success) {
 		cout << studentID << " removed from the roster." << std::endl << std::endl;
-		this->printAll(); /*prints students EXCEPT ones removed*/
 	}
 	else cout << studentID << " not found." << std::endl << std::endl;
 }

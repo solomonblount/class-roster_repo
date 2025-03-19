@@ -21,9 +21,23 @@ public:
 		DegreeProgram degreeProgram);
 	void remove(string studentID); /*Find the student with supplied ID and remove*/
 	void printAll(); /*Loops through all the students in classRosterArray and call the print() function for each student*/
-	void printAverageDaysInCourse(); /*Prints a student's average number of days in the three courses (the student ID parameter identifies the student)*/
+	void printAverageDaysInCourse(string studentID); /*Prints a student's average number of days in the three courses (the student ID parameter identifies the student)*/
 	void printByDegreeProgram(DegreeProgram degreeProgram); /*Prints out student information for a degree program specified by an enumerated type*/
 	void printInvalidEmails(); /*Each student's email must contain a '@', '.' and no spaces*/
+
+	// Get the number of students in the roster
+	int getRosterSize() const {
+		return lastIndex + 1;
+	}
+
+	// Get a student's ID by index
+	string getStudentID(int index) const {
+		if (index >= 0 && index <= lastIndex) {
+			return classRosterArray[index]->getStudentID();
+		}
+		return ""; // Return an empty string if the index is invalid
+	}
+
 	~Roster();
 };
 
